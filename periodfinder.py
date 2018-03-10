@@ -142,11 +142,7 @@ def make_combo_figure(filepath, t,f_t,period,freqs,power,starname='',outputpath=
   P_max = freqs[0]
   freq_best = 1./period
 
-  #saving in the summary
-  RecordFile = open(outputpath+"/RunSummary.csv","a")
-  RecordFile.write(str('%.2f' %sn) +','+str('%.5f' %freq_best)+',')
-  RecordFile.close()
-
+  
   label = ' (Pmin = ' + str(np.round(P_min,3)) + ', Pmax = ' + str(np.round(P_max,3)) + ')'
   freqs = np.array(freqs)
   freqs = 1./freqs

@@ -20,8 +20,7 @@ import warnings
 warnings.filterwarnings("ignore") #To suppress the warning. Comment this to see the range of warning.
 
 
-inputpath = '/home/prajwal/Downloads/PhaseCurves/*.fits'
-#SubFolder = 'PhaseCurves' #for loading the apertures
+inputpath = '/Volumes/westep/prajwal/Campaign15/*.fits'
 outputpath = 'Campaign15'
 
 #Create the folder if it does not exc_list
@@ -31,6 +30,7 @@ if not(os.path.exists(outputpath)):
 filepaths = glob(inputpath)
 
 for FILE in filepaths:
+  print FILE
   EPIC_ID = re.search('[0-9]{9}',FILE).group(0)
   print "Now running::",EPIC_ID
   try:

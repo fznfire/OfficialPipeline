@@ -142,7 +142,6 @@ def GetLightCurve(filepath='',outputpath='',plot=False):
     Campaign = re.search('c[0-9]{2}',filepath).group(0)
     Campaign = int(Campaign[1:])
 
-
     #if short cadence data
     if "spd" in filepath:
       starname = starname+"_spd"
@@ -171,7 +170,10 @@ def GetLightCurve(filepath='',outputpath='',plot=False):
     Quality = FitsFile[1].data['Quality']
     RA = FitsFile[0].header['RA_OBJ']
     Dec = FitsFile[0].header['DEC_OBJ']
-    KepMag = FitsFile[0].header['Kepmag']
+    try:
+        KepMag = FitsFile[0].header['Kepmag']
+    except:
+        KepMag = -1
     print "Kepler Magnitude:", KepMag
     X = FitsFile[2].header['CRPIX1']  - 1.0 #-1 to account for the fact indexing begins at 0 in python
     Y = FitsFile[2].header['CRPIX2'] - 1.0
@@ -193,8 +195,10 @@ def GetLightCurve(filepath='',outputpath='',plot=False):
     else:
         StarAperName = starname
 
+    AvgFlux = np.nanmedian(TotalFlux, axis=0)
     #make the aperture
     StdAper = FindAperture.Case1(AvgFlux,X,Y, StdCutOff=3.0)
+    FindAperture.ApertureOutline(StdAper,KepMag, AvgFlux, outputfolder, starname, X, Y)
 
 
 

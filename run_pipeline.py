@@ -55,16 +55,9 @@ def run(filepath='',outputpath='',chunksize=300,method ='SFF',SubFolder=False):
         #t2,f_t2,Xc2,Yc2 = centroidfit.find_thruster_events(t2,f_t2,Xc2,Yc2,starname=starname,outputpath=outputfolder)
 
   else:
-        ##### Change this later
-        if SubFolder:
-            t,f_t,Xc,Yc = GetLightCurve(filepath,outputpath=outputpath,plot=False)
-            T_Raw = np.copy(t)
-            Flux_Raw = np.copy(f_t)
-        else:
-            print "Aperture on the run"
-            t,f_t,Xc,Yc = ApertureOnTheRun(filepath,outputpath=outputpath,plot=False, SubFolder= SubFolder)
-            T_Raw = np.copy(t)
-            Flux_Raw = np.copy(f_t)
+        t,f_t,Xc,Yc = GetLightCurve(filepath,outputpath=outputpath,plot=False)
+        T_Raw = np.copy(t)
+        Flux_Raw = np.copy(f_t)
 
         #Remove the thruster events #TODO uncomment this later or implement this in K2SFF
         #t,f_t,Xc,Yc = centroidfit.find_thruster_events(t,f_t,Xc,Yc,starname=starname,outputpath=outputfolder)
@@ -138,14 +131,5 @@ def run(filepath='',outputpath='',chunksize=300,method ='SFF',SubFolder=False):
 
   folded_date,f_t_folded,period,freqlist,powers = periodfinder.get_period(t,f_t,outputpath=outputpath,starname=starname)
   periodfinder.make_combo_figure(filepath, t,f_t,period,freqlist,powers,starname= starname,outputpath=outputpath)
-
-
-
-  TimeTaken = time.time() - InitialTime
-  RecordFile = open(outputpath+"/RunSummary.csv","a")
-  TimeTakenStr = "%.2f" %TimeTaken
-  print "Time Taken::",TimeTakenStr
-  RecordFile
-  RecordFile.write(TimeTakenStr+'\n')
-  RecordFile.close()
+  
   pl.close('all')
